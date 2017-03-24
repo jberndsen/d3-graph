@@ -1,0 +1,23 @@
+{
+  "name": "d3-graph",
+  "version": "1.0.0",
+  "description": "Test/practise project for learning complex interactive graphing with D3.",
+  "main": "index.js",
+  "scripts": {
+    "start": "browser-sync start -s -f index.html src --no-ui --no-notify"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jberndsen/d3-graph.git"
+  },
+  "author": "Jeroen Berndsen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jberndsen/d3-graph/issues"
+  },
+  "homepage": "https://github.com/jberndsen/d3-graph#readme",
+  "dependencies": {
+    "browser-sync": "^2.18.8",
+    "d3": "^4.7.3"
+  }
+}
