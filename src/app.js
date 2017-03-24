@@ -6,7 +6,6 @@ d3.json('data-nodes.json', nodes => {
         const CANVAS_HEIGHT = 600;
         const NODE_WIDTH = 100;
         const NODE_HEIGHT = 40;
-        const MARGIN_FACTOR = 1.1;
 
         // helper methods
         pointToTranslate = point => `translate(${point[0]}, ${point[1]})`;
@@ -16,7 +15,8 @@ d3.json('data-nodes.json', nodes => {
         getNodePosition = (node) => {
             nodesAtLevel = nodes.filter(x => x.level === node.level);
             positionInLevel = nodesAtLevel.indexOf(node);
-            return [positionInLevel * NODE_WIDTH * MARGIN_FACTOR, node.level * NODE_HEIGHT * MARGIN_FACTOR];
+            return [ positionInLevel * (NODE_WIDTH + 10),
+                     (node.level - 1) * (NODE_HEIGHT + 50)];
         };
 
         getNodeCenterPoint = node => {
