@@ -2,20 +2,22 @@
 d3.json('data-nodes.json', nodes => {
     d3.json('data-links.json', links => {
         // constants
-        const nodeWidth = 100;
-        const nodeHeight = 40;
+        const CANVAS_WIDTH = 800;
+        const CANVAS_HEIGHT = 600;
+        const NODE_WIDTH = 100;
+        const NODE_HEIGHT = 40;
 
         // helper methods
         pointToTranslate = point => `translate(${point[0]}, ${point[1]})`;
 
         getNodeById = id => nodes.filter(x => x.id === id)[0];
 
-        getNodePosition = (node) => [0, node.id * 50];
+        getNodePosition = (node) => [0, node.level * 50];
 
         getNodeCenterPoint = node => {
             const nodePosition = getNodePosition(node);
-            const x = nodePosition[0] + nodeWidth / 2;
-            const y = nodePosition[1] + nodeHeight / 2;
+            const x = nodePosition[0] + NODE_WIDTH / 2;
+            const y = nodePosition[1] + NODE_HEIGHT / 2;
             return [x, y];
         }
 
@@ -23,8 +25,8 @@ d3.json('data-nodes.json', nodes => {
         const svg = d3
             .select('.graph')
             .append('svg')
-                .attr('width', 800)
-                .attr('height', 600);
+                .attr('width', CANVAS_WIDTH)
+                .attr('height', CANVAS_HEIGHT);
 
         // create the graph links
         const link = svg
@@ -50,8 +52,8 @@ d3.json('data-nodes.json', nodes => {
 
         node.append('rect')
             .attr('class', 'nodes')
-            .attr('width', nodeWidth)
-            .attr('height', nodeHeight);
+            .attr('width', NODE_WIDTH)
+            .attr('height', NODE_HEIGHT);
 
         node.append('text')
             .attr('x', 33)
