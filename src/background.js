@@ -1,12 +1,15 @@
 
 const generateBackground = (svg, nodes) => {
+
   const levels = d3.nest()
         .key((d) =>  d.level)
         .rollup((v) => v.length)
         .entries(nodes);
 
-  const sumLevels = levels.map( l => l.value).reduce((a, b) => a + b, 0);
+  const getLevelHeight = (totalNodes, nodeNum) => ((CANVAS_HEIGHT / 100) * ((100 / totalNodes) * nodeNum))
+
   let offset = 0;
+
   return svg
     .selectAll('g.nodes')
     .data(levels)
@@ -14,14 +17,10 @@ const generateBackground = (svg, nodes) => {
     .enter()
       .append("rect")
       .attr("width", "100%")
-      .attr("height", (d, i) => {
-        return `${((600/100) * ((100 / nodes.length) * d.value))}`
-      })
+      .attr("height", (d, i) => getLevelHeight(nodes.length, d.value))
       .attr('transform', (d, i) => {
-
-
         var val = `translate(0, ${offset})`
-        offset = offset + ((600/100) * ((100 / nodes.length) * d.value));
+        offset = offset + getLevelHeight(nodes.length, d.value);
         return val;
       })
       .attr("fill", (d, i) => {
