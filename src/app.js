@@ -1,12 +1,6 @@
 // read data
 d3.json('data-nodes.json', nodes => {
     d3.json('data-links.json', links => {
-        // constants
-        const CANVAS_WIDTH = 800;
-        const CANVAS_HEIGHT = 600;
-        const NODE_WIDTH = 100;
-        const NODE_HEIGHT = 40;
-
         // helper methods
         pointToTranslate = point => `translate(${point[0]}, ${point[1]})`;
 
@@ -33,6 +27,9 @@ d3.json('data-nodes.json', nodes => {
                 .attr('width', CANVAS_WIDTH)
                 .attr('height', CANVAS_HEIGHT);
 
+        // generate levelled background
+        generateBackground(svg, nodes);
+
         // create the graph links
         const link = svg
             .selectAll('g.links')
@@ -56,6 +53,7 @@ d3.json('data-nodes.json', nodes => {
                 .attr('transform', (d, i) => pointToTranslate(getNodePosition(d, i)));
 
         node.append('rect')
+            .attr('fill', colors.green)
             .attr('class', 'nodes')
             .attr('width', NODE_WIDTH)
             .attr('height', NODE_HEIGHT);
