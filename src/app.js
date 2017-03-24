@@ -1,16 +1,32 @@
 // read data
-d3.json('data-nodes.json', nodes => {
-    d3.json('data-links.json', links => {
+d3.json('data/data-nodes.json', nodes => {
+    d3.json('data/data-links.json', links => {
         // helper methods
         pointToTranslate = point => `translate(${point[0]}, ${point[1]})`;
 
         getNodeById = id => nodes.filter(x => x.id === id)[0];
 
+        getDepth = (node) => {
+            const parentsInLevel = getParents(node).filter(parent => parent.level === node.level);
+
+            if (!parentsInLevel || parentsInLevel.length === 0) {
+                return 1;
+            } else {
+                return Math.max(...parentsInLevel
+                    .map(parent => 1 + getDepth(parent)));
+            }
+        }
+
+        getParents = (node) => links.filter(link => link.to === node.id).map(link => getNodeById(link.from));
+
         getNodePosition = (node) => {
-            nodesAtLevel = nodes.filter(x => x.level === node.level);
-            positionInLevel = nodesAtLevel.indexOf(node);
-            return [ positionInLevel * (NODE_WIDTH + 10),
-                     (node.level - 1) * (NODE_HEIGHT + 50)];
+            const myDepth = getDepth(node);
+            const sameDepth = nodes.filter(n => getDepth(n) === myDepth);
+            
+            const horizontalPos = sameDepth.indexOf(node) * NODE_WIDTH * 1.2;
+            const verticalPos = (myDepth - 1) * NODE_HEIGHT * 1.2;
+            
+            return [ horizontalPos, verticalPos];
         };
 
         getNodeCenterPoint = node => {
