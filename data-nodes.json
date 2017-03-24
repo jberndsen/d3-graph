@@ -2,6 +2,6 @@
     {"id": 1, "level": 1, "goal": "een"},
     {"id": 2, "level": 1, "goal": "twee"},
     {"id": 3, "level": 1, "goal": "drie"},
-    {"id": 4, "level": 2, "goal": "vier"},
-    {"id": 5, "level": 3, "goal": "vijf"}
+    {"id": 4, "level": 1, "goal": "vier"},
+    {"id": 5, "level": 1, "goal": "vijf"}
 ]

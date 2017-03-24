@@ -12,9 +12,25 @@ d3.json('data-nodes.json', nodes => {
 
         getNodeById = id => nodes.filter(x => x.id === id)[0];
 
+        getDepth = (node) => {
+            console.log('calculating for node', node);
+            const parentsInLevel = getParents(node).filter(parent => parent.level === node.level);
+            if (!parentsInLevel) {
+                return 1;
+            } else {
+                let heights = [];
+                for (let parent of parentsInLevel) {
+                    const parentDepth = getDepth(parent);
+                    heights.push(1 + parentDepth);
+                }
+                return Math.max(...heights);
+            }
+        }
+
+        getParents = (node) => links.filter(link => link.to === node.id).map(link => getNodeById(link.from));
+
         getNodePosition = (node) => {
-            nodesAtLevel = nodes.filter(x => x.level === node.level);
-            positionInLevel = nodesAtLevel.indexOf(node);
+            positionInLevel = nodes.filter(x => x.level === node.level).indexOf(node);
             return [ positionInLevel * (NODE_WIDTH + 10),
                      (node.level - 1) * (NODE_HEIGHT + 50)];
         };
